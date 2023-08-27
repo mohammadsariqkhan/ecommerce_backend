@@ -24,8 +24,8 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     const {id} = req.params
     try {
-        const user = await User.findIdAndUpdate(id, req.body, {new: true}).exec()
-        // console.log(categories)
+        const user = await User.findByIdAndUpdate(id, req.body, {new: true}).exec()
+
         res.status(200).json(user)
     } catch (err) {
         res.status(400).json(err)
