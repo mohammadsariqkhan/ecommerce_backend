@@ -2,9 +2,9 @@ const { Cart } = require('../model/Cart');
 const {Product} = require("../model/Product");
 
 exports.fetchCartByUser = async (req, res) => {
-    const { user } = req.query;
+    const { id } = req.user;
     try {
-        const cartItems = await Cart.find({ user: user })
+        const cartItems = await Cart.find({ user: id })
         res.status(200).json(cartItems);
     } catch (err) {
         res.status(400).json(err);
@@ -12,7 +12,8 @@ exports.fetchCartByUser = async (req, res) => {
 };
 
 exports.addToCart = async (req, res) => {
-    const cart = new Cart(req.body);
+    const {id} = req.user
+    const cart = new Cart({...req.body,user:id});
     try {
         const doc = await cart.save();
 
